@@ -11,6 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(username: string, password: string) {
+    console.log('register anropas');
     return this.http.post(`${this.apiUrl}/register`, { username, password });
   }
 

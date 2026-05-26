@@ -1,3 +1,7 @@
+@if (loading) {
+  <app-loading />
+}
+
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-4">
@@ -10,8 +14,20 @@
       <form (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label class="form-label">Användarnamn</label>
-          <input type="text" class="form-control" [(ngModel)]="username" name="username" required />
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="username"
+            name="username"
+            required
+            minlength="3"
+            #usernameField="ngModel"
+          />
+          @if (usernameField.invalid && usernameField.touched) {
+            <div class="text-danger">Användarnamn måste vara minst 3 tecken</div>
+          }
         </div>
+
         <div class="mb-3">
           <label class="form-label">Lösenord</label>
           <input
@@ -20,9 +36,19 @@
             [(ngModel)]="password"
             name="password"
             required
+            minlength="8"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            #passwordField="ngModel"
           />
+          @if (passwordField.invalid && passwordField.touched) {
+            <div class="text-danger">
+              Lösenord måste vara minst 8 tecken, innehålla en stor bokstav, en siffra och ett
+              specialtecken
+            </div>
+          }
         </div>
-        <button type="submit" class="btn btn-success w-100">
+
+        <button type="submit" class="btn btn-success w-100" [disabled]="loading">
           <i class="fas fa-user-plus me-2"></i>Registrera
         </button>
       </form>

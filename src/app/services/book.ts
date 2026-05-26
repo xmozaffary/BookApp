@@ -16,8 +16,10 @@ export class BookService {
   ) {}
 
   private getHeaders() {
+    const token = this.authService.getToken();
+    console.log('token:', token);
     return new HttpHeaders({
-      Authorization: `Bearer ${this.authService.getToken()}`,
+      Authorization: `Bearer ${token}`,
     });
   }
 

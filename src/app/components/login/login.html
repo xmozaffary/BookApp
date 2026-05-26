@@ -1,9 +1,15 @@
+@if (loading) {
+  <app-loading />
+}
+
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-4">
       <h2 class="text-center mb-4">Logga in</h2>
 
-      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      @if (error) {
+        <div class="alert alert-danger">{{ error }}</div>
+      }
 
       <form (ngSubmit)="onSubmit()">
         <div class="mb-3">
@@ -20,7 +26,7 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary w-100">
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
           <i class="fas fa-sign-in-alt me-2"></i>Logga in
         </button>
       </form>
